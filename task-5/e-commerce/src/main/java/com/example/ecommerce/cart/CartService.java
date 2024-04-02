@@ -10,11 +10,13 @@ public interface CartService {
 
     Cart getCart(long id);
 
-    void updateCart(long id, UpdateCartRequest updateCartRequest);
-
     void emptyCart(long id);
 
-    void addProductToCart(AddProductToCartRequest addProductToCartRequest);
+    void addProductToCart(AddProductToCartRequest addProductToCartRequest) throws Exception;
 
     void removeProductFromCart(long id, RemoveProductFromCartRequest removeProductFromCartRequest);
+
+    void increaseProductFromCart(long id, UpdateCartRequest updateCartRequest);
+
+    void decreaseProductFromCart(long id, UpdateCartRequest updateCartRequest);
 }

@@ -1,6 +1,7 @@
 package com.example.ecommerce.purchase.dto;
 
 import com.example.ecommerce.cart.Cart;
+import com.example.ecommerce.cartItem.CartItem;
 import com.example.ecommerce.customer.Customer;
 import com.example.ecommerce.product.Product;
 import com.example.ecommerce.purchase.Purchase;
@@ -19,12 +20,9 @@ public class OrderDTO {
 
     private BigInteger totalPrice;
 
-    @ManyToOne
-    @JsonIgnore
     private Customer customer;
 
-    @OneToMany
-    private List<Product> products;
+    private List<CartItem> cartItems;
 
     public OrderDTO() {
     }
@@ -32,6 +30,6 @@ public class OrderDTO {
     public OrderDTO(Purchase purchase) {
         this.totalPrice = purchase.getTotalPrice();
         this.customer = purchase.getCustomer();
-        this.products = purchase.getProducts();
+        this.cartItems = purchase.getCartItems();
     }
 }

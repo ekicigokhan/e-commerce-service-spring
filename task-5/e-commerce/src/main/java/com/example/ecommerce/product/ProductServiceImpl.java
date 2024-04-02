@@ -1,9 +1,10 @@
 package com.example.ecommerce.product;
 
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ProductServiceImpl implements ProductService{
+public class ProductServiceImpl implements ProductService {
 
     private ProductRepository productRepository;
 
@@ -13,7 +14,7 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public Product getProduct(long id) {
-        return this.productRepository.findById(id).orElseThrow(()-> new RuntimeException("Product not found !"));
+        return this.productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found !"));
     }
 
     @Override
@@ -26,6 +27,7 @@ public class ProductServiceImpl implements ProductService{
         Product inDb = getProduct(id);
         inDb.setName(product.getName());
         inDb.setPrice(product.getPrice());
+        inDb.setStock(inDb.getStock() + product.getStock());
         this.productRepository.save(inDb);
     }
 

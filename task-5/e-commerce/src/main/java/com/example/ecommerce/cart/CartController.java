@@ -20,9 +20,17 @@ public class CartController {
         return new CartDTO(this.cartService.getCart(id));
     }
 
-    @PutMapping("/{id}")
-    Message updateCart(@PathVariable long id, @RequestBody UpdateCartRequest updateCartRequest){
-        this.cartService.updateCart(id,updateCartRequest);
+
+
+    @PutMapping("increaseProduct/{id}")
+    Message increaseProductCart(@PathVariable long id, @RequestBody UpdateCartRequest updateCartRequest){
+        this.cartService.increaseProductFromCart(id,updateCartRequest);
+        return new Message("Cart updated !");
+    }
+
+    @PutMapping("decreaseProduct/{id}")
+    Message decreaseProductFromCart(@PathVariable long id, @RequestBody UpdateCartRequest updateCartRequest){
+        this.cartService.decreaseProductFromCart(id,updateCartRequest);
         return new Message("Cart updated !");
     }
 
@@ -33,7 +41,7 @@ public class CartController {
     }
 
     @PostMapping
-    Message addProductToCart(@RequestBody AddProductToCartRequest addProductToCartRequest){
+    Message addProductToCart(@RequestBody AddProductToCartRequest addProductToCartRequest) throws Exception{
         this.cartService.addProductToCart(addProductToCartRequest);
         return new Message("Products added to cart successfully!");
     }

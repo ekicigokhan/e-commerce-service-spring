@@ -1,4 +1,4 @@
 package com.example.ecommerce.cart.dto;
 
-public record RemoveProductFromCartRequest(long productId) {
+public record RemoveProductFromCartRequest(long cartItemId) {
 }

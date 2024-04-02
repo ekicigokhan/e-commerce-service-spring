@@ -2,13 +2,13 @@ package com.example.ecommerce.product;
 
 import com.example.ecommerce.baseEntites.BaseEntity;
 import com.example.ecommerce.cart.Cart;
+import com.example.ecommerce.cartItem.CartItem;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigInteger;
+import java.util.List;
 
 @Entity
 @Getter
@@ -21,6 +21,11 @@ public class Product extends BaseEntity {
 
     private BigInteger price;
 
+    @JsonIgnore
     private int stock;
+
+    @OneToMany
+    @JsonIgnore
+    private List<CartItem> cartItems;
 
 }
