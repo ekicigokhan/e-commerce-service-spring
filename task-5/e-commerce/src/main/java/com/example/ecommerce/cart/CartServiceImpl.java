@@ -71,7 +71,7 @@ public class CartServiceImpl implements CartService {
             CartItem cartItem = new CartItem();
             cartItem.setProduct(product);
             cartItem.setQuantity(addProductToCartRequest.getQuantity());
-            cartItem.setTotalPrice(product.getPrice());
+            cartItem.setTotalPrice(product.getPrice().multiply(BigInteger.valueOf((long)addProductToCartRequest.getQuantity())));
             this.cartItemService.save(cartItem);
             cartItems.add(cartItem);
             product.setCartItems(cartItems);
@@ -86,7 +86,7 @@ public class CartServiceImpl implements CartService {
             CartItem cartItem = new CartItem();
             cartItem.setProduct(product);
             cartItem.setQuantity(addProductToCartRequest.getQuantity());
-            cartItem.setTotalPrice(product.getPrice());
+            cartItem.setTotalPrice(product.getPrice().multiply(BigInteger.valueOf((long)addProductToCartRequest.getQuantity())));
             this.cartItemService.save(cartItem);
             customer.getCart().getCartItems().add(cartItem);
             customer.getCart().setProductAmount(customer.getCart().getCartItems().size());

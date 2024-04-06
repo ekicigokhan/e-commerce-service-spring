@@ -9,6 +9,8 @@ import com.example.ecommerce.product.Product;
 import com.example.ecommerce.product.ProductService;
 import com.example.ecommerce.purchase.dto.GetAllOrdersForCustomerResponse;
 import com.example.ecommerce.purchase.dto.PlaceOrderRequest;
+import com.example.ecommerce.purchaseItem.PurchaseItem;
+import com.example.ecommerce.purchaseItem.PurchaseItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +34,9 @@ public class PurchaseServiceImpl implements PurchaseService {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private PurchaseItemService purchaseItemService;
+
 
     @Override
     public void placeOrder(PlaceOrderRequest placeOrderRequest) {
@@ -42,19 +47,27 @@ public class PurchaseServiceImpl implements PurchaseService {
             throw new RuntimeException("Cart is empty. Cannot be ordered.");
         }
 
-        List<CartItem> cartItems = new ArrayList<>();
-        for (CartItem c : cart.getCartItems()) {
-            cartItems.add(c);
+        Purchase purchase = new Purchase();
+        this.purchaseRepository.save(purchase);
+
+        List<PurchaseItem> purchaseItems = new ArrayList<>();
+        for (CartItem item : cart.getCartItems()) {
+            PurchaseItem purchaseItem = new PurchaseItem();
+            purchaseItem.setProductQuantity(item.getQuantity());
+            purchaseItem.setTotalPrice(item.getTotalPrice());
+            purchaseItem.setProductName(item.getProduct().getName());
+            purchaseItem.setPurchase(purchase);
+            purchaseItems.add(purchaseItem);
+            this.purchaseItemService.save(purchaseItem);
         }
 
-        Purchase purchase = new Purchase();
-        purchase.setCartItems(cartItems);
-        purchase.setTotalPrice(cart.getTotalPrice());
+        purchase.setPurchaseItems(purchaseItems);
+        purchase.setTotalPrice(this.getTotalPricePurchases(purchaseItems));
         purchase.setCustomer(customer);
         customer.getPurchases().add(purchase);
         this.purchaseRepository.save(purchase);
 
-        for (CartItem c : cartItems) {
+        for (CartItem c : cart.getCartItems()) {
             c.getProduct().setStock(c.getProduct().getStock() - c.getQuantity());
             this.productService.createProduct(c.getProduct());
         }
@@ -83,4 +96,14 @@ public class PurchaseServiceImpl implements PurchaseService {
         return getAllOrdersForCustomerResponses;
 
     }
+
+    public BigInteger getTotalPricePurchases(List<PurchaseItem> purchaseItems) {
+        BigInteger total = BigInteger.ZERO;
+        for (PurchaseItem p : purchaseItems) {
+            total = total.add(p.getTotalPrice());
+        }
+        return total;
+    }
 }
+
+

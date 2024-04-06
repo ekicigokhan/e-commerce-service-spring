@@ -3,6 +3,7 @@ package com.example.ecommerce.purchase;
 import com.example.ecommerce.baseEntites.BaseEntity;
 import com.example.ecommerce.cartItem.CartItem;
 import com.example.ecommerce.customer.Customer;
+import com.example.ecommerce.purchaseItem.PurchaseItem;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -30,7 +31,7 @@ public class Purchase extends BaseEntity {
     @JsonIgnore
     private Customer customer;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<CartItem> cartItems;
+    @OneToMany
+    private List<PurchaseItem> purchaseItems;
 
 }

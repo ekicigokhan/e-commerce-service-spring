@@ -5,6 +5,7 @@ import com.example.ecommerce.cartItem.CartItem;
 import com.example.ecommerce.customer.Customer;
 import com.example.ecommerce.product.Product;
 import com.example.ecommerce.purchase.Purchase;
+import com.example.ecommerce.purchaseItem.PurchaseItem;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -22,7 +23,7 @@ public class OrderDTO {
 
     private Customer customer;
 
-    private List<CartItem> cartItems;
+    private List<PurchaseItem> purchaseItems;
 
     public OrderDTO() {
     }
@@ -30,6 +31,6 @@ public class OrderDTO {
     public OrderDTO(Purchase purchase) {
         this.totalPrice = purchase.getTotalPrice();
         this.customer = purchase.getCustomer();
-        this.cartItems = purchase.getCartItems();
+        this.purchaseItems = purchase.getPurchaseItems();
     }
 }
