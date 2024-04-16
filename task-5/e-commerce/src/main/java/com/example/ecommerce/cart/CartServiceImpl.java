@@ -34,7 +34,6 @@ public class CartServiceImpl implements CartService {
     private CartItemService cartItemService;
 
 
-
     @Override
     public void save(Cart cart) {
         this.cartRepository.save(cart);
@@ -59,11 +58,12 @@ public class CartServiceImpl implements CartService {
         Customer customer = customerService.getCustomer(addProductToCartRequest.getCustomerId());
         Product product = productService.getProduct(addProductToCartRequest.getProductId());
 
-        if (addProductToCartRequest.getQuantity() > product.getStock()){
+        if (addProductToCartRequest.getQuantity() > product.getStock()) {
             throw new Exception("Only " + product.getStock() + " of this product left in this seller");
         } else if (product.getStock() == 0) {
             throw new Exception("This product is finished. We will let you know ");
         }
+
 
         if (customer.getCart() == null) {
             Cart cart = new Cart();
@@ -71,7 +71,7 @@ public class CartServiceImpl implements CartService {
             CartItem cartItem = new CartItem();
             cartItem.setProduct(product);
             cartItem.setQuantity(addProductToCartRequest.getQuantity());
-            cartItem.setTotalPrice(product.getPrice().multiply(BigInteger.valueOf((long)addProductToCartRequest.getQuantity())));
+            cartItem.setTotalPrice(product.getPrice().multiply(BigInteger.valueOf((long) addProductToCartRequest.getQuantity())));
             this.cartItemService.save(cartItem);
             cartItems.add(cartItem);
             product.setCartItems(cartItems);
@@ -82,11 +82,16 @@ public class CartServiceImpl implements CartService {
             customer.setCart(cart);
             this.cartRepository.save(cart);
             this.customerService.addCustomer(customer);
+
+        } else if (customer.getCart().getCartItems().contains(product)) {
+            for (CartItem c : customer.getCart().getCartItems()){
+                this.increaseProductInCart(customer.getCart().getId(), c.getId());
+            }
         } else {
             CartItem cartItem = new CartItem();
             cartItem.setProduct(product);
             cartItem.setQuantity(addProductToCartRequest.getQuantity());
-            cartItem.setTotalPrice(product.getPrice().multiply(BigInteger.valueOf((long)addProductToCartRequest.getQuantity())));
+            cartItem.setTotalPrice(product.getPrice().multiply(BigInteger.valueOf((long) addProductToCartRequest.getQuantity())));
             this.cartItemService.save(cartItem);
             customer.getCart().getCartItems().add(cartItem);
             customer.getCart().setProductAmount(customer.getCart().getCartItems().size());
@@ -100,8 +105,8 @@ public class CartServiceImpl implements CartService {
     @Override
     public void removeProductFromCart(long id, RemoveProductFromCartRequest removeProductFromCartRequest) {
         Cart inDbCart = this.getCart(id);
-        for (CartItem cartItem : inDbCart.getCartItems()){
-            if (cartItem.getId() == removeProductFromCartRequest.cartItemId()){
+        for (CartItem cartItem : inDbCart.getCartItems()) {
+            if (cartItem.getId() == removeProductFromCartRequest.cartItemId()) {
                 inDbCart.getCartItems().remove(cartItem);
                 this.cartItemService.save(cartItem);
                 break;
@@ -111,12 +116,22 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void increaseProductFromCart(long id, UpdateCartRequest updateCartRequest) {
+    public void increaseProductInCart(long id, UpdateCartRequest updateCartRequest) {
 
         Cart cart = this.getCart(id);
         CartItem cartItem = this.cartItemService.getCartItem(updateCartRequest.getCartItemId());
         cartItem.setQuantity(cartItem.getQuantity() + 1);
-        cartItem.setTotalPrice(cartItem.getProduct().getPrice().multiply(BigInteger.valueOf((long)cartItem.getQuantity())));
+        cartItem.setTotalPrice(cartItem.getProduct().getPrice().multiply(BigInteger.valueOf((long) cartItem.getQuantity())));
+        cart.setTotalPrice(this.getTotalPrice(cart.getCartItems()));
+        this.cartItemService.save(cartItem);
+    }
+
+    public void increaseProductInCart(long id, long cartItemId) {
+
+        Cart cart = this.getCart(id);
+        CartItem cartItem = this.cartItemService.getCartItem(cartItemId);
+        cartItem.setQuantity(cartItem.getQuantity() + 1);
+        cartItem.setTotalPrice(cartItem.getProduct().getPrice().multiply(BigInteger.valueOf((long) cartItem.getQuantity())));
         cart.setTotalPrice(this.getTotalPrice(cart.getCartItems()));
         this.cartItemService.save(cartItem);
     }
@@ -127,14 +142,14 @@ public class CartServiceImpl implements CartService {
         Cart cart = this.getCart(id);
         CartItem cartItem = this.cartItemService.getCartItem(updateCartRequest.getCartItemId());
         cartItem.setQuantity(cartItem.getQuantity() - 1);
-        cartItem.setTotalPrice(cartItem.getProduct().getPrice().multiply(BigInteger.valueOf((long)cartItem.getQuantity())));
+        cartItem.setTotalPrice(cartItem.getProduct().getPrice().multiply(BigInteger.valueOf((long) cartItem.getQuantity())));
         cart.setTotalPrice(this.getTotalPrice(cart.getCartItems()));
         this.cartItemService.save(cartItem);
     }
 
-    private BigInteger getTotalPrice(List<CartItem> cartItems){
+    private BigInteger getTotalPrice(List<CartItem> cartItems) {
         BigInteger total = BigInteger.ZERO;
-        for (CartItem cartItem : cartItems){
+        for (CartItem cartItem : cartItems) {
             total = total.add(cartItem.getTotalPrice());
         }
         return total;

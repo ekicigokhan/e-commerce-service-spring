@@ -3,6 +3,7 @@ package com.example.ecommerce.product;
 import com.example.ecommerce.product.dto.ProductCreate;
 import com.example.ecommerce.product.dto.ProductDTO;
 import com.example.ecommerce.product.dto.ProductUpdate;
+import com.example.ecommerce.product.dto.UpdateProductStockRequest;
 import com.example.ecommerce.shared.Message;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,6 +30,12 @@ public class ProductController {
     @PutMapping("/{id}")
     Message updateProduct(@PathVariable long id, @RequestBody ProductUpdate productUpdate){
         this.productService.updateProduct(id,productUpdate.toProduct());
+        return new Message("Product updated successfully");
+    }
+
+    @PatchMapping("/{id}/stock")
+    Message updateProductStock(@PathVariable long id, @RequestBody UpdateProductStockRequest updateProductStockRequest){
+        this.productService.updateProductStock(id,updateProductStockRequest);
         return new Message("Product updated successfully");
     }
 

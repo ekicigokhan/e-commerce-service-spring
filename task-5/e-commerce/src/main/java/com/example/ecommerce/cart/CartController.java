@@ -23,8 +23,8 @@ public class CartController {
 
 
     @PutMapping("increaseProduct/{id}")
-    Message increaseProductCart(@PathVariable long id, @RequestBody UpdateCartRequest updateCartRequest){
-        this.cartService.increaseProductFromCart(id,updateCartRequest);
+    Message increaseProductInCart(@PathVariable long id, @RequestBody UpdateCartRequest updateCartRequest){
+        this.cartService.increaseProductInCart(id,updateCartRequest);
         return new Message("Cart updated !");
     }
 

@@ -1,12 +1,13 @@
 package com.example.ecommerce.product;
 
+import com.example.ecommerce.product.dto.UpdateProductStockRequest;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ProductServiceImpl implements ProductService {
 
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
     public ProductServiceImpl(ProductRepository productRepository) {
         this.productRepository = productRepository;
@@ -27,7 +28,13 @@ public class ProductServiceImpl implements ProductService {
         Product inDb = getProduct(id);
         inDb.setName(product.getName());
         inDb.setPrice(product.getPrice());
-        inDb.setStock(inDb.getStock() + product.getStock());
+        this.productRepository.save(inDb);
+    }
+
+    @Override
+    public void updateProductStock(long id, UpdateProductStockRequest updateProductStockRequest) {
+        Product inDb = this.getProduct(id);
+        inDb.setStock(updateProductStockRequest.stock());
         this.productRepository.save(inDb);
     }
 

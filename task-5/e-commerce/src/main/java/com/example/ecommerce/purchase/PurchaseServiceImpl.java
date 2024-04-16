@@ -39,13 +39,19 @@ public class PurchaseServiceImpl implements PurchaseService {
 
 
     @Override
-    public void placeOrder(PlaceOrderRequest placeOrderRequest) {
+    public void placeOrder(PlaceOrderRequest placeOrderRequest) throws Exception {
         Customer customer = this.customerService.getCustomer(placeOrderRequest.getCustomerId());
         Cart cart = customer.getCart();
 
         if (cart == null || cart.getCartItems().isEmpty()) {
             throw new RuntimeException("Cart is empty. Cannot be ordered.");
         }
+
+        for (CartItem c : cart.getCartItems()){
+            if (c.getQuantity() > c.getProduct().getStock()){
+                throw new Exception("Only " + c.getProduct().getStock() + " of this product left in this seller");
+            }
+         }
 
         Purchase purchase = new Purchase();
         this.purchaseRepository.save(purchase);

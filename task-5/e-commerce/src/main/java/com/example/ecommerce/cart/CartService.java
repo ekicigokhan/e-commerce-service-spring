@@ -16,7 +16,7 @@ public interface CartService {
 
     void removeProductFromCart(long id, RemoveProductFromCartRequest removeProductFromCartRequest);
 
-    void increaseProductFromCart(long id, UpdateCartRequest updateCartRequest);
+    void increaseProductInCart(long id, UpdateCartRequest updateCartRequest);
 
     void decreaseProductFromCart(long id, UpdateCartRequest updateCartRequest);
 }
