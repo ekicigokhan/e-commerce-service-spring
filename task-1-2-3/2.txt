@@ -1,0 +1,16 @@
+2- Birbirinden bağımsız iki platformun birbiriyle haberleşmesi nasıl sağlanabilir? Örneğin, X
+platformu Java ile yazılmış olsun, Y platform u C# ile. Bu iki platformun bir biri ile iletişim
+halinde request-response ilişkisi kurması gerekiyor. Bu yapıyı nasıl sağlarız? Bu iletişim
+sırasında güvenlik nasıl sağlanır ?
+
+- Bu iki yapı arasındaki habaerleşmeyi sağlama ve ilişkiyi kurabilmenin yolu HTTP tabanlı bir API kullanmaktır.
+
+Request- Response ilişkisi :
+
+- Bu API'ler, istemci-sunucu mimarisine dayanır ve çoğunlukla JSON olmak üzere JSON veya XML formatında veri alışverişi yaparlar.
+
+Güvenlik : 
+
+- İletişim sırasında güvenliği sağlamak için HTTPS kullanılabilir. HTTPS, HTTP üzerinden veri şifreleme ve kimlik doğrulama sağlar. Bu, iletişimin gizliliğini ve bütünlüğünü korur.
+- İstemci ve sunucu arasındaki kimlik doğrulama ve yetkilendirme mekanizmaları uygulanabilir. Örneğin, OAuth veya JWT tabanlı kimlik doğrulama protokolleri kullanılabilir.
+ 

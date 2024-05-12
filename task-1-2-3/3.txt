@@ -1,0 +1,12 @@
+3- SOLR Nedir? Kullanım alanlarını araştırınız. Kurumsal bir projede kullanılabilecek iki farklı
+kullanım alanı örneği veriniz.
+
+SOLR Nedir ?
+
+- Apache Solr, açık kaynaklı bir arama motorudur. 
+- Solr, büyük ölçekli metin arama ve analizleri gerçekleştirmek için kullanılan güçlü bir arama motorudur. Genellikle metin tabanlı verilerin depolanması, aranması, indekslenmesi ve analiz edilmesi için kullanılır.
+
+İki farklı kullanım örneği :
+
+- Müşteriyle yapılan tüm satış geçmişleri, iletişim geçmişi vs. gibi verileri Solr ile indeksleyebilir ve gerektiğinde hızlıca onlara erişip sorun çözebiliriz.
+- Metin tabanlı verilerin hızlı aranması, sorgulanması ve analiz edilmesi avantajı sayesinde, bir şirketin müşteri geri bildirimlerini hızlıca analiz edebiliriz.

@@ -1,0 +1,26 @@
+1- SAP Commerce (Hybris) nedir? Hangi amaçlarla kullanılır? Kullandığı teknolojiler
+nelerdir? Kısaca açıklayınız.
+
+SAP Commerce(Hybris) Nedir ?
+
+- SAP Commerce Cloud, eski adıyla Hybris, bulut tabanlı bir omni-channel e-ticaret çözümüdür. 
+omni-channel : Çevrim içi ve çevrim dışı tüm iletişim kanallarının entegre bir şekilde kullanılarak kusursuz bir müşteri deneyimi yaratmayı amaçlayan pazarlama stratejisidir.
+
+- Temel olarak endüstri alanlarında iş yapan şirketlerin dijital ticaret ihtiyaçlarını karşılamak için tasarlanmıştır.
+
+Kullanım amaçları : 
+	
+- İşletmelere online mağaza, mobil uygulama, sosyal medya vb. platformlar ile müşterilerehizmet sunabilme imkanı sağlamak.
+- Müşterilerin tercihlerine, geçmiş alışverişlerine bağlı olarak kişiselleştirilmiş deneyimler sunmak ve satışları artırmak.
+- Sipariş yönetimi kolayca sağlamak. Sipariş alınması, işlenmesi, envanter yönetimi, teslimat yönetimi vb. işlemleri kolaylaştırmak.
+- İndirimler, kuponlar vb. kısa süreliğine aktif olan bazı senaryoları uyarlamak ve yönetmek.
+
+Kullanıldığı teknolojiler :
+	
+- Java
+- Apache Solr veya Elasticsearch ( Hızlı arama ve dizinleme için arama motorları )
+- Apache Tomcat ( Uygulama sunucusu)
+- Spring Framework
+- SAP HANA ve tüm ilişkisel veri tabanları ( SAP HANA, SAP Commerce'in performansını artırabilir )
+- Rest API ( Harici uygulamalara entegrasyon )
+- Docker ve Kubenates ( Bulut tabanlı dağıtım )
